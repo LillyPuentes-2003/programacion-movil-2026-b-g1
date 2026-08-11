@@ -28,7 +28,7 @@ NN-week/
 ## Como trabajar
 
 ```bash
-git clone https://github.com/code-corhuila/programacion-movil-2026-b-g1.git
+https://github.com/LillyPuentes-2003/programacion-movil-2026-b-g1.git
 cd programacion-movil-2026-b-g1
 ```
 
