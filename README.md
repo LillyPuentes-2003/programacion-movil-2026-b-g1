@@ -1,3 +1,8 @@
+<!--
+CONFIG
+FULL_NAME: Lilly Signey Puentes Rincon 
+GITHUB_USER:LillyPuentes-2003
+-->
 # Programacion Movil - 2026-B
 
 Repositorio de clase - Corporacion Universitaria del Huila (CORHUILA).
