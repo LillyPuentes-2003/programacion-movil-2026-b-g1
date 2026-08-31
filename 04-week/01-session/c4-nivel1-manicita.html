@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ManiCita — Modelo C4 Nivel 1</title>
+<style>
+  :root{ --ink:#1c2b30; --muted:#5d7076; --line:#d7e0e2; --bg:#f5f8f8; --card:#fff; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.6 "Segoe UI",system-ui,-apple-system,sans-serif}
+  header{background:var(--card);border-bottom:1px solid var(--line);padding:28px 32px}
+  h1{margin:0 0 6px;font-size:26px;letter-spacing:-.01em}
+  header p{margin:0;color:var(--muted);font-size:14px}
+  .wrap{padding:28px 32px 60px;max-width:1200px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;
+          padding:22px 24px;margin-bottom:26px}
+  h2{margin:0 0 4px;font-size:19px}
+  .sub{margin:0 0 18px;color:var(--muted);font-size:14px}
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fcfdfd}
+  svg{display:block;margin:0 auto}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:6px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:#eef4f4;font-weight:600}
+  .tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11.5px;
+       font-weight:600;color:#fff;white-space:nowrap}
+  .tp{background:#08427b} .ts{background:#1168bd} .te{background:#8a8a8a}
+  .legend{display:flex;flex-wrap:wrap;gap:26px;margin-top:16px;font-size:13px;color:var(--muted);
+          align-items:center}
+  .legend span{display:flex;align-items:center;gap:8px}
+  .sw{width:22px;height:16px;border-radius:4px}
+  .note{margin-top:16px;padding:12px 16px;background:#eef4f4;border-radius:8px;
+        font-size:13.5px;color:var(--muted)}
+  .note b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ManiCita — Modelo C4, Nivel 1 (Contexto del sistema)</h1>
+  <p>Agendamiento y elección de servicios de manicure en Neiva · Programación Móvil [G1] 2026-B · Lilly Signey Puentes Rincon</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>Diagrama de contexto</h2>
+  <p class="sub">Quién usa ManiCita y con qué sistemas externos se comunica. En el Nivel 1 el sistema
+     se ve como una sola caja: todavía no se abre por dentro.</p>
+
+  <div class="scroll">
+  <svg width="1020" height="800" viewBox="0 0 1020 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+              orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a8a8f"/>
+      </marker>
+      <style>
+        .n  {font:700 15px "Segoe UI",system-ui,sans-serif;fill:#fff}
+        .ty {font:11.5px "Segoe UI",system-ui,sans-serif;fill:#cfe0f2}
+        .tye{font:11.5px "Segoe UI",system-ui,sans-serif;fill:#e8e8e8}
+        .d  {font:12.5px "Segoe UI",system-ui,sans-serif;fill:#e8f0f9}
+        .de {font:12.5px "Segoe UI",system-ui,sans-serif;fill:#f2f2f2}
+        .rel{font:12px "Segoe UI",system-ui,sans-serif;fill:#3d5157}
+        .relt{font:11px "Segoe UI",system-ui,sans-serif;fill:#7a8a8f}
+        .ttl{font:700 13px "Segoe UI",system-ui,sans-serif;fill:#5d7076;letter-spacing:.06em}
+      </style>
+    </defs>
+
+    <!-- ============ PERSONAS ============ -->
+    <!-- Clienta -->
+    <circle cx="185" cy="52" r="24" fill="#08427b"/>
+    <rect x="60" y="76" width="250" height="112" rx="9" fill="#08427b"/>
+    <text x="185" y="104" text-anchor="middle" class="n">Clienta</text>
+    <text x="185" y="122" text-anchor="middle" class="ty">[Persona]</text>
+    <text x="185" y="145" text-anchor="middle" class="d">Mujer de Neiva que se hace</text>
+    <text x="185" y="161" text-anchor="middle" class="d">las uñas y quiere agendar</text>
+    <text x="185" y="177" text-anchor="middle" class="d">su cita sin usar WhatsApp</text>
+
+    <!-- Manicurista -->
+    <circle cx="835" cy="52" r="24" fill="#08427b"/>
+    <rect x="710" y="76" width="250" height="112" rx="9" fill="#08427b"/>
+    <text x="835" y="104" text-anchor="middle" class="n">Manicurista / negocio</text>
+    <text x="835" y="122" text-anchor="middle" class="ty">[Persona]</text>
+    <text x="835" y="145" text-anchor="middle" class="d">Emprendedora o salón que</text>
+    <text x="835" y="161" text-anchor="middle" class="d">publica sus servicios y</text>
+    <text x="835" y="177" text-anchor="middle" class="d">administra su agenda</text>
+
+    <!-- ============ SISTEMA ============ -->
+    <rect x="315" y="345" width="390" height="150" rx="10" fill="#1168bd"/>
+    <text x="510" y="382" text-anchor="middle" class="n">ManiCita</text>
+    <text x="510" y="401" text-anchor="middle" class="ty">[Sistema de software · app móvil híbrida]</text>
+    <text x="510" y="428" text-anchor="middle" class="d">Publica los servicios de manicure de la ciudad</text>
+    <text x="510" y="446" text-anchor="middle" class="d">con su precio, duración, profesional y horario,</text>
+    <text x="510" y="464" text-anchor="middle" class="d">y permite agendar citas sobre cupos reales</text>
+    <text x="510" y="482" text-anchor="middle" class="d">evitando que se crucen dos clientas.</text>
+
+    <!-- ============ SISTEMAS EXTERNOS ============ -->
+    <rect x="55" y="640" width="255" height="112" rx="9" fill="#8a8a8a"/>
+    <text x="182" y="672" text-anchor="middle" class="n">Notificaciones push</text>
+    <text x="182" y="690" text-anchor="middle" class="tye">[Sistema externo]</text>
+    <text x="182" y="713" text-anchor="middle" class="de">Entrega los avisos de cita</text>
+    <text x="182" y="729" text-anchor="middle" class="de">al celular de la clienta</text>
+    <text x="182" y="745" text-anchor="middle" class="de">y de la manicurista</text>
+
+    <rect x="710" y="640" width="255" height="112" rx="9" fill="#8a8a8a"/>
+    <text x="837" y="672" text-anchor="middle" class="n">Servicio de mapas</text>
+    <text x="837" y="690" text-anchor="middle" class="tye">[Sistema externo]</text>
+    <text x="837" y="713" text-anchor="middle" class="de">Muestra la ubicación del</text>
+    <text x="837" y="729" text-anchor="middle" class="de">salón para que la clienta</text>
+    <text x="837" y="745" text-anchor="middle" class="de">sepa a dónde llegar</text>
+
+    <!-- ============ RELACIONES ============ -->
+    <!-- Clienta -> ManiCita -->
+    <path d="M 210 190 L 385 341" stroke="#7a8a8f" stroke-width="1.7" fill="none" marker-end="url(#a)"/>
+    <rect x="180" y="228" width="215" height="52" fill="#f5f8f8" rx="4"/>
+    <text x="287" y="246" text-anchor="middle" class="rel">Busca servicios, agenda</text>
+    <text x="287" y="262" text-anchor="middle" class="rel">y cancela sus citas</text>
+    <text x="287" y="277" text-anchor="middle" class="relt">[App móvil]</text>
+
+    <!-- Manicurista -> ManiCita -->
+    <path d="M 810 190 L 635 341" stroke="#7a8a8f" stroke-width="1.7" fill="none" marker-end="url(#a)"/>
+    <rect x="625" y="228" width="235" height="52" fill="#f5f8f8" rx="4"/>
+    <text x="742" y="246" text-anchor="middle" class="rel">Publica servicios, precios,</text>
+    <text x="742" y="262" text-anchor="middle" class="rel">horarios y profesionales</text>
+    <text x="742" y="277" text-anchor="middle" class="relt">[App móvil]</text>
+
+    <!-- ManiCita -> Notificaciones -->
+    <path d="M 390 499 L 225 636" stroke="#7a8a8f" stroke-width="1.7" fill="none" marker-end="url(#a)"/>
+    <rect x="175" y="530" width="215" height="52" fill="#f5f8f8" rx="4"/>
+    <text x="282" y="548" text-anchor="middle" class="rel">Envía confirmaciones y</text>
+    <text x="282" y="564" text-anchor="middle" class="rel">recordatorios de la cita</text>
+    <text x="282" y="579" text-anchor="middle" class="relt">[HTTPS / API]</text>
+
+    <!-- ManiCita -> Mapas -->
+    <path d="M 630 499 L 795 636" stroke="#7a8a8f" stroke-width="1.7" fill="none" marker-end="url(#a)"/>
+    <rect x="630" y="530" width="215" height="52" fill="#f5f8f8" rx="4"/>
+    <text x="737" y="548" text-anchor="middle" class="rel">Consulta la ubicación</text>
+    <text x="737" y="564" text-anchor="middle" class="rel">del salón</text>
+    <text x="737" y="579" text-anchor="middle" class="relt">[HTTPS / API]</text>
+  </svg>
+  </div>
+
+  <div class="legend">
+    <span><i class="sw" style="background:#08427b"></i> Persona (usuario del sistema)</span>
+    <span><i class="sw" style="background:#1168bd"></i> Sistema en alcance</span>
+    <span><i class="sw" style="background:#8a8a8a"></i> Sistema externo</span>
+  </div>
+
+  <div class="note"><b>Por qué no aparece una pasarela de pagos:</b> el pago del servicio quedó fuera
+    del alcance del MVP —en Neiva se paga en efectivo o por transferencia en el local—, así que no es
+    un sistema externo del contexto actual. Entraría en una versión posterior.</div>
+</section>
+
+<section>
+  <h2>Elementos del diagrama</h2>
+  <table>
+    <tr><th style="width:210px">Elemento</th><th style="width:130px">Tipo</th><th>Responsabilidad</th></tr>
+    <tr>
+      <td>Clienta</td>
+      <td><span class="tag tp">Persona</span></td>
+      <td>Explora el catálogo, elige el servicio, agenda su cita sobre un cupo libre y la consulta o cancela después.</td>
+    </tr>
+    <tr>
+      <td>Manicurista / negocio</td>
+      <td><span class="tag tp">Persona</span></td>
+      <td>Registra su negocio y sus profesionales, crea los servicios con descripción, precio y duración, define el horario de atención y gestiona la agenda del día.</td>
+    </tr>
+    <tr>
+      <td>ManiCita</td>
+      <td><span class="tag ts">Sistema</span></td>
+      <td>Mantiene el catálogo de servicios, calcula los cupos disponibles a partir del horario y la duración, registra las citas y garantiza que una profesional no quede con dos citas a la misma hora.</td>
+    </tr>
+    <tr>
+      <td>Notificaciones push</td>
+      <td><span class="tag te">Externo</span></td>
+      <td>Entrega al celular los avisos de cita creada, confirmada, rechazada o cancelada, y los recordatorios previos.</td>
+    </tr>
+    <tr>
+      <td>Servicio de mapas</td>
+      <td><span class="tag te">Externo</span></td>
+      <td>Resuelve la dirección del salón para que la clienta pueda ubicarlo.</td>
+    </tr>
+  </table>
+</section>
+
+</div>
+</body>
+</html>
