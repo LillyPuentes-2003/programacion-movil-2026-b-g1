@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ManiCita — Diagramas BPMN</title>
+<style>
+  :root{
+    --ink:#1c2b30; --muted:#5d7076; --line:#d7e0e2; --bg:#f5f8f8; --card:#ffffff;
+    --lane:#eef4f4; --pool:#dbe7e7;
+    --task:#ffffff; --task-line:#2f6f6b;
+    --start:#f0faee; --start-line:#4c8f3f;
+    --end:#fdf2f1; --end-line:#b3403a;
+    --gw:#fffaea; --gw-line:#c99a1e;
+    --flow:#546b71;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.6 "Segoe UI",system-ui,-apple-system,sans-serif}
+  header{background:var(--card);border-bottom:1px solid var(--line);padding:28px 32px}
+  h1{margin:0 0 6px;font-size:26px;letter-spacing:-.01em}
+  header p{margin:0;color:var(--muted);font-size:14px}
+  .wrap{padding:28px 32px 60px;max-width:1500px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;
+          padding:22px 24px;margin-bottom:26px}
+  h2{margin:0 0 4px;font-size:19px}
+  .sub{margin:0 0 18px;color:var(--muted);font-size:14px}
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fcfdfd}
+  svg{display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:22px;margin-top:16px;font-size:13px;color:var(--muted);
+          align-items:center}
+  .legend span{display:flex;align-items:center;gap:8px}
+  .sw{width:26px;height:16px;border-radius:4px;border:1.6px solid var(--task-line);background:var(--task)}
+  .sw.s{border-radius:50%;width:16px;border-color:var(--start-line);background:var(--start)}
+  .sw.e{border-radius:50%;width:16px;border-width:3px;border-color:var(--end-line);background:var(--end)}
+  .sw.g{transform:rotate(45deg);width:15px;height:15px;border-radius:2px;
+        border-color:var(--gw-line);background:var(--gw)}
+  .note{margin-top:16px;padding:12px 16px;background:var(--lane);border-radius:8px;
+        font-size:13.5px;color:var(--muted)}
+  .note b{color:var(--ink)}
+  footer{padding:0 32px 40px;color:var(--muted);font-size:13px;max-width:1500px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ManiCita — Flujos del aplicativo (BPMN)</h1>
+  <p>Agendamiento y elección de servicios de manicure en Neiva · Programación Móvil [G1] 2026-B · Lilly Signey Puentes Rincon</p>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2>BPMN 1 — Publicación del servicio (proceso del negocio)</h2>
+    <p class="sub">Cómo la emprendedora deja su servicio listo para que las clientas puedan agendarlo:
+       nombre, descripción, precio, duración, profesional que atiende y horario de atención.</p>
+    <div class="scroll"><svg id="d1"></svg></div>
+    <div class="legend">
+      <span><i class="sw s"></i> Evento de inicio</span>
+      <span><i class="sw"></i> Actividad / tarea</span>
+      <span><i class="sw g"></i> Compuerta exclusiva (decisión)</span>
+      <span><i class="sw e"></i> Evento de fin</span>
+    </div>
+    <div class="note"><b>Regla clave:</b> los cupos agendables no se crean a mano. La app los calcula
+      dividiendo el horario de atención de la profesional entre la duración del servicio, así la
+      manicurista configura una sola vez y no vuelve a tocarlo.</div>
+  </section>
+
+  <section>
+    <h2>BPMN 2 — Agendamiento de la cita (proceso de la clienta)</h2>
+    <p class="sub">Desde que la clienta busca un servicio hasta que la cita queda confirmada por el negocio.
+       Incluye los dos caminos alternativos: que no haya horas libres y que el cupo se ocupe mientras decide.</p>
+    <div class="scroll"><svg id="d2"></svg></div>
+    <div class="legend">
+      <span><i class="sw s"></i> Evento de inicio</span>
+      <span><i class="sw"></i> Actividad / tarea</span>
+      <span><i class="sw g"></i> Compuerta exclusiva (decisión)</span>
+      <span><i class="sw e"></i> Evento de fin</span>
+    </div>
+    <div class="note"><b>Regla clave:</b> el cupo se valida dos veces —al mostrar las horas y otra vez al
+      confirmar—, porque entre esos dos momentos otra clienta pudo haberlo reservado. Es lo que evita
+      que dos clientas queden a la misma hora con la misma profesional.</div>
+  </section>
+
+</div>
+
+<footer>
+  Notación BPMN 2.0 simplificada. Las bandas horizontales (<i>lanes</i>) indican quién ejecuta cada
+  actividad: la clienta, la aplicación o el negocio.
+</footer>
+
+<script>
+/* ---------- Motor de dibujo BPMN ---------- */
+const NS = "http://www.w3.org/2000/svg";
+const LANE_H = 200, COL_W = 200, X0 = 300, Y0 = 60;
+const TASK_W = 156, TASK_H = 74, GW = 30, EV = 20;
+const LANE_LABEL_W = 120, POOL_W = 40, PAD_L = 40;
+
+function el(tag, attrs){
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  return n;
+}
+function halfW(n){ return n.type === 'task' ? TASK_W/2 : n.type === 'gw' ? GW : EV; }
+function halfH(n){ return n.type === 'task' ? TASK_H/2 : n.type === 'gw' ? GW : EV; }
+
+function text(parent, x, y, lines, cls, bg){
+  lines.forEach((ln, i) => {
+    /* fondo opcional: evita que un flujo de retorno atraviese el rótulo */
+    if (bg) parent.appendChild(el('rect', {x: x - ln.length*3.5, y: y + i*14 - 11,
+                                            width: ln.length*7, height: 14, fill: bg}));
+    const t = el('text', {x:x, y: y + i*14, 'text-anchor':'middle', class: cls});
+    t.textContent = ln;
+    parent.appendChild(t);
+  });
+}
+
+function render(svgId, diag){
+  const svg = document.getElementById(svgId);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const maxCol = Math.max(...diag.nodes.map(n => n.col));
+  const W = X0 + (maxCol + 1) * COL_W + 60;
+  const poolH = diag.lanes.length * LANE_H;
+  const H = Y0 + poolH + 110;
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+
+  /* defs: flecha + estilos */
+  const defs = el('defs');
+  const mk = el('marker', {id:'arw-'+svgId, viewBox:'0 0 10 10', refX:'9', refY:'5',
+                            markerWidth:'7', markerHeight:'7', orient:'auto-start-reverse'});
+  mk.appendChild(el('path', {d:'M 0 0 L 10 5 L 0 10 z', fill:'#546b71'}));
+  defs.appendChild(mk);
+  const style = el('style');
+  style.textContent = `
+    .lbl{font:12px "Segoe UI",system-ui,sans-serif;fill:#1c2b30}
+    .lbl-ev{font:11.5px "Segoe UI",system-ui,sans-serif;fill:#3d5157}
+    .lbl-gw{font:11.5px "Segoe UI",system-ui,sans-serif;fill:#3d5157;font-weight:600}
+    .lbl-fl{font:11px "Segoe UI",system-ui,sans-serif;fill:#5d7076}
+    .lane-t{font:600 13px "Segoe UI",system-ui,sans-serif;fill:#3d5157}
+    .pool-t{font:700 13.5px "Segoe UI",system-ui,sans-serif;fill:#2b4045;letter-spacing:.04em}
+  `;
+  defs.appendChild(style);
+  svg.appendChild(defs);
+
+  /* pool + lanes */
+  const gLane = el('g');
+  gLane.appendChild(el('rect', {x:PAD_L, y:Y0, width:W-PAD_L-30, height:poolH,
+                                 fill:'none', stroke:'#b9caca', 'stroke-width':1.4}));
+  gLane.appendChild(el('rect', {x:PAD_L, y:Y0, width:POOL_W, height:poolH,
+                                 fill:'#dbe7e7', stroke:'#b9caca', 'stroke-width':1.4}));
+  const pt = el('text', {x: PAD_L + POOL_W/2, y: Y0 + poolH/2, 'text-anchor':'middle', class:'pool-t',
+                          transform:`rotate(-90 ${PAD_L+POOL_W/2} ${Y0+poolH/2})`});
+  pt.textContent = diag.pool;
+  gLane.appendChild(pt);
+
+  diag.lanes.forEach((lane, i) => {
+    const y = Y0 + i*LANE_H;
+    gLane.appendChild(el('rect', {x:PAD_L+POOL_W, y:y, width:W-PAD_L-POOL_W-30, height:LANE_H,
+                                   fill: i%2 ? '#fbfdfd' : '#f4f9f9', stroke:'#c9d8d8', 'stroke-width':1}));
+    gLane.appendChild(el('rect', {x:PAD_L+POOL_W, y:y, width:LANE_LABEL_W, height:LANE_H,
+                                   fill:'#eef4f4', stroke:'#c9d8d8', 'stroke-width':1}));
+    const cx = PAD_L + POOL_W + LANE_LABEL_W/2, cy = y + LANE_H/2;
+    lane.label.forEach((ln, k) => {
+      const t = el('text', {x:cx, y: cy + (k - (lane.label.length-1)/2)*16 + 5,
+                             'text-anchor':'middle', class:'lane-t'});
+      t.textContent = ln;
+      gLane.appendChild(t);
+    });
+  });
+  svg.appendChild(gLane);
+
+  /* posiciones */
+  const laneIdx = {};
+  diag.lanes.forEach((l,i) => laneIdx[l.id] = i);
+  const map = {};
+  diag.nodes.forEach(n => {
+    n.cx = X0 + n.col * COL_W;
+    n.cy = Y0 + laneIdx[n.lane]*LANE_H + LANE_H/2;
+    n.bg = laneIdx[n.lane] % 2 ? '#fbfdfd' : '#f4f9f9';
+    map[n.id] = n;
+  });
+
+  /* flujos primero (quedan debajo de las figuras) */
+  const gFlow = el('g');
+  diag.edges.forEach(e => {
+    const a = map[e.from], b = map[e.to];
+    const pts = routePoints(a, b, e, poolH);
+    const d = pts.map((p,i) => (i ? 'L ' : 'M ') + p[0] + ' ' + p[1]).join(' ');
+    gFlow.appendChild(el('path', {d:d, fill:'none', stroke:'#546b71', 'stroke-width':1.5,
+                                   'marker-end':`url(#arw-${svgId})`}));
+    if (e.label){
+      /* cuando el flujo tiene quiebre, la etiqueta va sobre el tramo intermedio:
+         así no choca con el rótulo de la compuerta ni con la otra salida */
+      const seg = pts.length === 4 ? [pts[1], pts[2]] : [pts[0], pts[1]];
+      const lx = e.lx !== undefined ? e.lx : (seg[0][0] + seg[1][0]) / 2;
+      const ly = e.ly !== undefined ? e.ly : (seg[0][1] + seg[1][1]) / 2;
+      const bg = el('rect', {x: lx - e.label.length*3.1, y: ly - 15, width: e.label.length*6.2,
+                              height: 15, fill:'#fcfdfd', rx:3});
+      gFlow.appendChild(bg);
+      const t = el('text', {x:lx, y:ly - 4, 'text-anchor':'middle', class:'lbl-fl'});
+      t.textContent = e.label;
+      gFlow.appendChild(t);
+    }
+  });
+  svg.appendChild(gFlow);
+
+  /* figuras */
+  const gNode = el('g');
+  diag.nodes.forEach(n => {
+    if (n.type === 'task'){
+      gNode.appendChild(el('rect', {x:n.cx-TASK_W/2, y:n.cy-TASK_H/2, width:TASK_W, height:TASK_H,
+                                     rx:9, fill:'#ffffff', stroke:'#2f6f6b', 'stroke-width':1.6}));
+      const y = n.cy - ((n.label.length-1)*14)/2 + 4;
+      text(gNode, n.cx, y, n.label, 'lbl');
+    } else if (n.type === 'gw'){
+      gNode.appendChild(el('polygon', {
+        points:`${n.cx},${n.cy-GW} ${n.cx+GW},${n.cy} ${n.cx},${n.cy+GW} ${n.cx-GW},${n.cy}`,
+        fill:'#fffaea', stroke:'#c99a1e', 'stroke-width':1.8}));
+      gNode.appendChild(el('path', {d:`M ${n.cx-9} ${n.cy-9} L ${n.cx+9} ${n.cy+9} M ${n.cx+9} ${n.cy-9} L ${n.cx-9} ${n.cy+9}`,
+                                     stroke:'#c99a1e', 'stroke-width':2.2, fill:'none'}));
+      const y = n.cy + GW + 16;
+      text(gNode, n.cx, y, n.label, 'lbl-gw', n.bg);
+    } else {
+      const isEnd = n.type === 'end';
+      gNode.appendChild(el('circle', {cx:n.cx, cy:n.cy, r:EV,
+        fill: isEnd ? '#fdf2f1' : '#f0faee',
+        stroke: isEnd ? '#b3403a' : '#4c8f3f', 'stroke-width': isEnd ? 3.4 : 2}));
+      const y = n.cy + EV + 16;
+      text(gNode, n.cx, y, n.label, 'lbl-ev', n.bg);
+    }
+  });
+  svg.appendChild(gNode);
+}
+
+function routePoints(a, b, e, poolH){
+  const ah = halfH(a), bh = halfH(b), aw = halfW(a), bw = halfW(b);
+  if (e.via === 'top' || e.via === 'bottom'){
+    const off = e.off || 0;
+    const ch = e.via === 'top' ? Y0 - 28 - off : Y0 + poolH + 34 + off;
+    const dir = e.via === 'top' ? -1 : 1;
+    return [[a.cx, a.cy + dir*ah], [a.cx, ch], [b.cx, ch], [b.cx, b.cy + dir*bh]];
+  }
+  if (Math.abs(a.cy - b.cy) < 1) return [[a.cx + aw, a.cy], [b.cx - bw, b.cy]];
+  const mx = ((a.cx + aw) + (b.cx - bw)) / 2;
+  return [[a.cx + aw, a.cy], [mx, a.cy], [mx, b.cy], [b.cx - bw, b.cy]];
+}
+
+/* ---------- BPMN 1: publicación del servicio ---------- */
+render('d1', {
+  pool: 'MANICITA',
+  lanes: [
+    {id:'neg', label:['Negocio /','emprendedora']},
+    {id:'app', label:['App','ManiCita']}
+  ],
+  nodes: [
+    {id:'s',  lane:'neg', col:0, type:'start', label:['Quiere ofrecer sus','servicios en la app']},
+    {id:'t1', lane:'neg', col:1, type:'task',  label:['Registrar el negocio','y sus profesionales']},
+    {id:'t2', lane:'neg', col:2, type:'task',  label:['Crear el servicio:','nombre y','descripción']},
+    {id:'t3', lane:'neg', col:3, type:'task',  label:['Definir precio y','duración del','servicio']},
+    {id:'t4', lane:'neg', col:4, type:'task',  label:['Asignar la','profesional que','lo atiende']},
+    {id:'t5', lane:'neg', col:5, type:'task',  label:['Definir el horario','de atención de la','profesional']},
+    {id:'g1', lane:'app', col:6, type:'gw',    label:['¿Información','completa?']},
+    {id:'t6', lane:'app', col:7, type:'task',  label:['Generar los cupos','(horario ÷ duración','del servicio)']},
+    {id:'t7', lane:'app', col:8, type:'task',  label:['Publicar el servicio','en el catálogo']},
+    {id:'e',  lane:'app', col:9, type:'end',   label:['Servicio disponible','para agendar']}
+  ],
+  edges: [
+    {from:'s',  to:'t1'},
+    {from:'t1', to:'t2'},
+    {from:'t2', to:'t3'},
+    {from:'t3', to:'t4'},
+    {from:'t4', to:'t5'},
+    {from:'t5', to:'g1'},
+    {from:'g1', to:'t6', label:'Sí'},
+    {from:'t6', to:'t7'},
+    {from:'t7', to:'e'},
+    {from:'g1', to:'t2', via:'bottom', label:'No: faltan datos'}
+  ]
+});
+
+/* ---------- BPMN 2: agendamiento de la cita ---------- */
+render('d2', {
+  pool: 'MANICITA',
+  lanes: [
+    {id:'cli', label:['Clienta']},
+    {id:'app', label:['App','ManiCita']},
+    {id:'neg', label:['Negocio /','manicurista']}
+  ],
+  nodes: [
+    {id:'s',   lane:'cli', col:0,  type:'start', label:['La clienta','necesita una cita']},
+    {id:'t1',  lane:'cli', col:1,  type:'task',  label:['Explorar el catálogo','y filtrar por tipo','de servicio']},
+    {id:'t2',  lane:'cli', col:2,  type:'task',  label:['Ver el detalle:','precio, duración','y profesional']},
+    {id:'t3',  lane:'cli', col:3,  type:'task',  label:['Elegir la fecha','de la cita']},
+    {id:'t4',  lane:'app', col:4,  type:'task',  label:['Calcular y mostrar','las horas libres','de la profesional']},
+    {id:'g1',  lane:'app', col:5,  type:'gw',    label:['¿Hay horas','libres ese día?']},
+    {id:'t5',  lane:'cli', col:6,  type:'task',  label:['Seleccionar la hora','y confirmar']},
+    {id:'g2',  lane:'app', col:7,  type:'gw',    label:['¿El cupo','sigue libre?']},
+    {id:'t6',  lane:'app', col:8,  type:'task',  label:['Registrar la cita','en estado Pendiente','y avisar al negocio']},
+    {id:'t7',  lane:'neg', col:9,  type:'task',  label:['Revisar la solicitud','en su agenda']},
+    {id:'g3',  lane:'neg', col:10, type:'gw',    label:['¿Confirma','la cita?']},
+    {id:'t8',  lane:'app', col:11, type:'task',  label:['Marcar Confirmada','y notificar','a la clienta']},
+    {id:'t9',  lane:'neg', col:11, type:'task',  label:['Rechazar e','informar el motivo','a la clienta']},
+    {id:'e1',  lane:'cli', col:12, type:'end',   label:['Cita agendada']},
+    {id:'e2',  lane:'neg', col:12, type:'end',   label:['Cita rechazada']}
+  ],
+  edges: [
+    {from:'s',  to:'t1'},
+    {from:'t1', to:'t2'},
+    {from:'t2', to:'t3'},
+    {from:'t3', to:'t4'},
+    {from:'t4', to:'g1'},
+    {from:'g1', to:'t5', label:'Sí'},
+    {from:'t5', to:'g2'},
+    {from:'g2', to:'t6', label:'Sí'},
+    {from:'t6', to:'t7'},
+    {from:'t7', to:'g3'},
+    {from:'g3', to:'t8', label:'Sí'},
+    {from:'t8', to:'e1'},
+    {from:'g3', to:'t9', label:'No'},
+    {from:'t9', to:'e2'},
+    {from:'g1', to:'t3', via:'top',    label:'No hay horas'},
+    {from:'g2', to:'t4', via:'bottom', label:'No: el cupo fue tomado'}
+  ]
+});
+</script>
+</body>
+</html>
