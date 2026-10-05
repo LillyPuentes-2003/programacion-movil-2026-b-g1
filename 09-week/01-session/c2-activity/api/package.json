@@ -1,0 +1,16 @@
+{
+  "name": "c2-activity-api",
+  "version": "1.0.0",
+  "description": "API REST mínima (Express) para la entidad Service de ManiCita — Corte 2",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
