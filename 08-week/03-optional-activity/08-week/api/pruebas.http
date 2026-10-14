@@ -1,0 +1,21 @@
+### Listar tareas
+GET http://localhost:3000/tareas
+
+### Crear una tarea
+POST http://localhost:3000/tareas
+Content-Type: application/json
+
+{
+  "titulo": "Probar con Thunder Client"
+}
+
+### Crear una tarea inválida (debe responder 400)
+POST http://localhost:3000/tareas
+Content-Type: application/json
+
+{
+  "titulo": "ab"
+}
+
+### Ver una tarea
+GET http://localhost:3000/tareas/1

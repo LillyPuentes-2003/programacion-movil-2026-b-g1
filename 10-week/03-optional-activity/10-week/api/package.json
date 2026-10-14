@@ -1,0 +1,16 @@
+{
+  "name": "citas-api",
+  "version": "1.0.0",
+  "description": "Semana 10 · API de citas (ManiCita) para la mini-app integradora",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
