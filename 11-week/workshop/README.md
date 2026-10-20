@@ -14,7 +14,7 @@ La carpeta `app/` es una copia sin cambios de `beauty-salon-app` en el commit `d
 - CODE_REPO: https://github.com/code-corhuila/beauty-salon-app
 - BASELINE: team app, beauty-salon-app commit d3043758e6d28b03ff259f548f7d434839deb313
 - REFLECTION_DOC: https://docs.google.com/document/d/1gwYMi6PDj1Q1EU0J_ZzHYoCiPtfbcvP-58-qGfjacyE/edit
-- MY_SCREENS: (se escribe en el CP1)
+- MY_SCREENS: Catálogo de servicios (/services), Detalle del servicio (/service/:serviceId), Inicio de sesión (/login)
 <!-- CONFIG-END -->
 
 ## Cómo correr la app
