@@ -1,0 +1,339 @@
+/* Tokens de design-system.md — claro y oscuro salen del mismo set de variables (cambian los
+   valores, no los componentes); el tema oscuro sigue la preferencia del sistema, igual que
+   dark.system.css de Ionic. */
+:root {
+  --color-brand: #a8456b;
+  --color-brand-soft: #f7e8ee;
+  --color-background: #fbf7f8;
+  --color-surface: #ffffff;
+  --color-text-primary: #1f1a1d;
+  --color-text-secondary: #6b5f65;
+  --color-border: #e7dde1;
+  --color-success: #2f6b4f;
+  --color-warning: #8a5c00;
+  --color-error: #a32b2b;
+  --color-disabled: #9a9096;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-brand: #e8a0bc;
+    --color-brand-soft: #3a2630;
+    --color-background: #0f0c0e;
+    --color-surface: #1a1518;
+    --color-text-primary: #f5eff2;
+    --color-text-secondary: #b7a9af;
+    --color-border: #2e262a;
+    --color-success: #7fbf9e;
+    --color-warning: #e2b25c;
+    --color-error: #f09a9a;
+    --color-disabled: #6e646a;
+  }
+}
+
+.mc-text-display {
+  font: 700 28px/34px var(--ion-font-family);
+  color: var(--color-text-primary);
+}
+.mc-text-title {
+  font: 600 20px/26px var(--ion-font-family);
+  color: var(--color-text-primary);
+}
+.mc-text-body {
+  font: 400 16px/24px var(--ion-font-family);
+  color: var(--color-text-primary);
+}
+.mc-text-label {
+  font: 500 14px/20px var(--ion-font-family);
+  color: var(--color-text-primary);
+}
+.mc-text-caption {
+  font: 400 12px/16px var(--ion-font-family);
+  color: var(--color-text-secondary);
+}
+
+.mc-chip-row {
+  display: flex;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  padding: 0 var(--space-lg) var(--space-md);
+}
+.mc-chip {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  padding: 7px 13px;
+  font: 500 13px/16px var(--ion-font-family);
+  white-space: nowrap;
+  flex: none;
+  min-height: 32px;
+}
+.mc-chip[aria-pressed='true'] {
+  background: var(--color-brand-soft);
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.mc-card {
+  appearance: none;
+  cursor: pointer;
+  font: inherit;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  gap: var(--space-md);
+  margin: 0 var(--space-lg) var(--space-md);
+  box-shadow: 0 1px 2px rgba(31, 26, 29, 0.05);
+  text-align: start;
+  width: calc(100% - 2 * var(--space-lg));
+}
+.mc-card:active {
+  transform: scale(0.98);
+}
+.mc-thumb {
+  width: 74px;
+  height: 74px;
+  border-radius: var(--radius-sm);
+  background: var(--color-brand-soft);
+  flex: none;
+  object-fit: cover;
+}
+.mc-card-price {
+  color: var(--color-brand);
+  font: 600 14px/20px var(--ion-font-family);
+}
+
+.mc-btn {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-brand);
+  color: #fff;
+  font: 600 14px/20px var(--ion-font-family);
+  padding: 14px var(--space-lg);
+  text-align: center;
+  min-height: 48px;
+}
+.mc-btn:disabled {
+  background: var(--color-disabled);
+}
+
+.mc-empty {
+  padding: var(--space-xxl) var(--space-sm);
+  text-align: center;
+}
+.mc-empty-art {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-soft);
+  margin: 0 auto var(--space-lg);
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+}
+
+.mc-rowline {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+.mc-rowline:last-child {
+  border-bottom: 0;
+}
+
+.mc-content-bg {
+  --background: var(--color-background);
+}
+
+.mc-banner {
+  background: var(--color-brand-soft);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font: 400 12px/16px var(--ion-font-family);
+  color: var(--color-text-primary);
+  margin: 0 var(--space-lg) var(--space-md);
+}
+
+/* Formularios (login, registro): campo-formulario.md y registro.md */
+.mc-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg) var(--space-xl);
+}
+.mc-form .mc-banner {
+  margin: 0;
+}
+.mc-form-intro {
+  margin: calc(-1 * var(--space-sm)) 0 0;
+  color: var(--color-text-secondary);
+}
+.mc-form-footer {
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  background: var(--color-background);
+}
+.mc-form-alt {
+  margin: var(--space-md) 0 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.mc-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.mc-field-box {
+  display: flex;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.mc-field-box:focus-within {
+  border: 2px solid var(--color-brand);
+  margin: -1px;
+}
+.mc-field-box[data-invalid='true'] {
+  border-color: var(--color-error);
+}
+.mc-field-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  border: 0;
+  background: transparent;
+  padding: 0 var(--space-md);
+  font: 400 16px/24px var(--ion-font-family);
+  color: var(--color-text-primary);
+  outline: none;
+}
+.mc-field-input:disabled {
+  color: var(--color-disabled);
+}
+.mc-field-toggle {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 22px;
+}
+.mc-field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  margin: 0;
+  font: 400 12px/16px var(--ion-font-family);
+  color: var(--color-error);
+}
+.mc-field-error ion-icon {
+  flex: none;
+  font-size: 16px;
+}
+.mc-field-helper {
+  margin: 0;
+}
+.mc-field-link {
+  align-self: flex-start;
+  margin-top: calc(-1 * var(--space-md));
+}
+
+.mc-link {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: var(--space-xs) 0;
+  min-height: 32px;
+  font: 600 14px/20px var(--ion-font-family);
+  color: var(--color-brand);
+  text-decoration: underline;
+}
+
+.mc-banner-error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+}
+
+.mc-role-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+.mc-role-option {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  min-height: 48px;
+  padding: var(--space-md);
+  text-align: start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+}
+.mc-role-option[aria-checked='true'] {
+  background: var(--color-brand-soft);
+  border: 2px solid var(--color-brand);
+  padding: calc(var(--space-md) - 1px);
+}
+.mc-role-icon {
+  font-size: 24px;
+  color: var(--color-brand);
+}
+.mc-role-label {
+  font-weight: 600;
+}
+
+/* Pantalla de carga mientras se restaura la sesión (HU-10) */
+.mc-splash {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  color: var(--color-brand);
+}
+.mc-splash-brand {
+  color: var(--color-brand);
+}
+.mc-splash ion-spinner {
+  color: var(--color-brand);
+}
+.mc-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,112 @@
+{
+  "catalogo": {
+    "titulo": "Services",
+    "filtro": {
+      "traditional": "Traditional",
+      "semi_permanent": "Semi-permanent",
+      "acrylic": "Acrylics",
+      "removal": "Removal",
+      "nail_art": "Nail art"
+    },
+    "offline": "You're offline. Showing the last update from {{fecha}}.",
+    "error": {
+      "titulo": "Couldn't load the catalog",
+      "reintentar": "Retry"
+    },
+    "vacio": {
+      "titulo": "No services published yet",
+      "mensaje": "Check back soon, or share ManiCita with your trusted nail salon so they can publish their services.",
+      "accion": "Share ManiCita"
+    },
+    "vacioFiltro": {
+      "titulo": "No services of this type",
+      "mensaje": "Try another type, or remove the filter to see the whole catalog.",
+      "accion": "Remove filter"
+    }
+  },
+  "servicio": {
+    "detalle": {
+      "tituloError": "Couldn't load the service",
+      "reintentar": "Retry",
+      "tituloNoDisponible": "This service is no longer available",
+      "mensajeNoDisponible": "It may have been paused or removed.",
+      "accionVolver": "Back to catalog",
+      "profesional": "With {{nombre}}",
+      "agendar": "Book",
+      "direccionCopiada": "Address copied",
+      "sinConexionAgendar": "You need a connection to book"
+    }
+  },
+  "campo": {
+    "clave": {
+      "mostrar": "Show password",
+      "ocultar": "Hide password"
+    }
+  },
+  "auth": {
+    "sinConexion": {
+      "login": "You need a connection to sign in.",
+      "registro": "You need a connection to create your account."
+    },
+    "error": {
+      "red": "We could not connect. Check your signal and try again.",
+      "reintentar": "Try again",
+      "inesperado": "Something went wrong. Try again in a moment."
+    }
+  },
+  "login": {
+    "titulo": "Sign in to book",
+    "subtitulo": "Use your account email and password.",
+    "campo": {
+      "correo": "Email",
+      "clave": "Password"
+    },
+    "boton": {
+      "entrar": "Sign in"
+    },
+    "error": {
+      "credenciales": "Incorrect email or password."
+    },
+    "sinCuenta": "No account yet?",
+    "crearCuenta": "Create account"
+  },
+  "registro": {
+    "titulo": "Create your account",
+    "rol": {
+      "pregunta": "How will you use ManiCita?",
+      "clienta": "I want to book",
+      "clientaAyuda": "I look for manicures and book my slot",
+      "negocio": "I offer services",
+      "negocioAyuda": "I publish my services and receive bookings",
+      "elegirPrimero": "First choose how you will use ManiCita"
+    },
+    "campo": {
+      "nombre": "Name",
+      "celular": "Mobile number",
+      "celularAyuda": "10 digits, no spaces",
+      "correo": "Email",
+      "clave": "Password",
+      "claveAyuda": "At least 8 characters",
+      "salon": "Salon name",
+      "direccion": "Salon address"
+    },
+    "validacion": {
+      "required": "This field is required",
+      "phoneDigits": "The mobile number must have 10 digits",
+      "emailFormat": "Enter a valid email, like name@email.com",
+      "passwordLength": "The password must have at least 8 characters"
+    },
+    "error": {
+      "correoTomado": "That email already has an account. Sign in.",
+      "irALogin": "Sign in with that email"
+    },
+    "boton": {
+      "crear": "Create account"
+    },
+    "conCuenta": "Already have an account?",
+    "iniciarSesion": "Sign in"
+  },
+  "app": {
+    "cargando": "Loading ManiCita…"
+  }
+}

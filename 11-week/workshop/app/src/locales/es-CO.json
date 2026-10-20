@@ -1,0 +1,112 @@
+{
+  "catalogo": {
+    "titulo": "Servicios",
+    "filtro": {
+      "traditional": "Tradicional",
+      "semi_permanent": "Semipermanente",
+      "acrylic": "Acrílicas",
+      "removal": "Retiro",
+      "nail_art": "Decoración"
+    },
+    "offline": "Estás sin conexión. Mostrando la última actualización del {{fecha}}.",
+    "error": {
+      "titulo": "No se pudo cargar el catálogo",
+      "reintentar": "Reintentar"
+    },
+    "vacio": {
+      "titulo": "Todavía no hay servicios publicados",
+      "mensaje": "Vuelve pronto, o comparte ManiCita con tu manicurista de confianza para que publique sus servicios.",
+      "accion": "Compartir ManiCita"
+    },
+    "vacioFiltro": {
+      "titulo": "Ningún servicio de este tipo",
+      "mensaje": "Prueba con otro tipo, o quita el filtro para ver todo el catálogo.",
+      "accion": "Quitar filtro"
+    }
+  },
+  "servicio": {
+    "detalle": {
+      "tituloError": "No se pudo cargar el servicio",
+      "reintentar": "Reintentar",
+      "tituloNoDisponible": "Este servicio ya no está disponible",
+      "mensajeNoDisponible": "Puede que lo hayan pausado o eliminado.",
+      "accionVolver": "Volver al catálogo",
+      "profesional": "Atiende {{nombre}}",
+      "agendar": "Agendar",
+      "direccionCopiada": "Dirección copiada",
+      "sinConexionAgendar": "Necesitas conexión para agendar"
+    }
+  },
+  "campo": {
+    "clave": {
+      "mostrar": "Mostrar contraseña",
+      "ocultar": "Ocultar contraseña"
+    }
+  },
+  "auth": {
+    "sinConexion": {
+      "login": "Necesitas conexión para entrar.",
+      "registro": "Necesitas conexión para crear tu cuenta."
+    },
+    "error": {
+      "red": "No pudimos conectarnos. Revisa tu señal e intenta de nuevo.",
+      "reintentar": "Reintentar",
+      "inesperado": "Algo salió mal. Intenta de nuevo en un momento."
+    }
+  },
+  "login": {
+    "titulo": "Inicia sesión para agendar",
+    "subtitulo": "Entra con el correo y la contraseña de tu cuenta.",
+    "campo": {
+      "correo": "Correo",
+      "clave": "Contraseña"
+    },
+    "boton": {
+      "entrar": "Entrar"
+    },
+    "error": {
+      "credenciales": "Correo o contraseña incorrectos."
+    },
+    "sinCuenta": "¿No tienes cuenta?",
+    "crearCuenta": "Crear cuenta"
+  },
+  "registro": {
+    "titulo": "Crea tu cuenta",
+    "rol": {
+      "pregunta": "¿Cómo vas a usar ManiCita?",
+      "clienta": "Quiero agendar",
+      "clientaAyuda": "Busco manicure y separo mi cita",
+      "negocio": "Ofrezco servicios",
+      "negocioAyuda": "Publico mis servicios y recibo citas",
+      "elegirPrimero": "Elige primero cómo vas a usar ManiCita"
+    },
+    "campo": {
+      "nombre": "Nombre",
+      "celular": "Celular",
+      "celularAyuda": "10 dígitos, sin espacios",
+      "correo": "Correo",
+      "clave": "Contraseña",
+      "claveAyuda": "Mínimo 8 caracteres",
+      "salon": "Nombre del salón",
+      "direccion": "Dirección del salón"
+    },
+    "validacion": {
+      "required": "Este campo es obligatorio",
+      "phoneDigits": "El celular debe tener 10 dígitos",
+      "emailFormat": "Escribe un correo válido, como nombre@correo.com",
+      "passwordLength": "La contraseña debe tener al menos 8 caracteres"
+    },
+    "error": {
+      "correoTomado": "Ese correo ya tiene una cuenta. Inicia sesión.",
+      "irALogin": "Iniciar sesión con ese correo"
+    },
+    "boton": {
+      "crear": "Crear cuenta"
+    },
+    "conCuenta": "¿Ya tienes cuenta?",
+    "iniciarSesion": "Inicia sesión"
+  },
+  "app": {
+    "cargando": "Cargando ManiCita…"
+  }
+}
