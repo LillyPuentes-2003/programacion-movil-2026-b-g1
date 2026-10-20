@@ -108,5 +108,18 @@
   },
   "app": {
     "cargando": "Cargando ManiCita…"
+  },
+  "tabs": {
+    "servicios": "Servicios",
+    "citas": "Mis citas",
+    "cuenta": "Cuenta"
+  },
+  "misCitas": {
+    "titulo": "Mis citas",
+    "sinSesion": {
+      "titulo": "Inicia sesión para ver tus citas",
+      "mensaje": "Aquí vas a ver tus citas próximas y las que ya pasaron.",
+      "accion": "Iniciar sesión"
+    }
   }
 }

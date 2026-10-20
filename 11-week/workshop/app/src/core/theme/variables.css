@@ -1,2 +1,9 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+/* Conecta los tokens de ManiCita con los colores de Ionic, para que IonTabBar, IonRefresher e
+   IonToast usen el mismo color de marca que el resto de la app (W11 CP2). */
+:root {
+  --ion-color-primary: var(--color-brand);
+  --ion-color-primary-contrast: var(--color-on-brand);
+  --ion-color-danger: var(--color-error);
+  --ion-color-success: var(--color-success);
+  --ion-tab-bar-color-selected: var(--color-brand);
+}

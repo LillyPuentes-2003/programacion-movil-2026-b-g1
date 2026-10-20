@@ -108,5 +108,18 @@
   },
   "app": {
     "cargando": "Loading ManiCita…"
+  },
+  "tabs": {
+    "servicios": "Services",
+    "citas": "My appointments",
+    "cuenta": "Account"
+  },
+  "misCitas": {
+    "titulo": "My appointments",
+    "sinSesion": {
+      "titulo": "Sign in to see your appointments",
+      "mensaje": "Your upcoming and past appointments will show up here.",
+      "accion": "Sign in"
+    }
   }
 }

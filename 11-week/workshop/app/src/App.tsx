@@ -15,6 +15,7 @@ import { CatalogRepositoryImpl } from '@features/catalog/data/CatalogRepositoryI
 import { CATALOG_REPOSITORY_KEY } from '@features/catalog/data/catalogRepositoryProvider'
 import { CatalogScreen } from '@features/catalog/presentation/CatalogScreen'
 import { ServiceDetailScreen } from '@features/catalog/presentation/ServiceDetailScreen'
+import { MyAppointmentsScreen } from '@features/appointments/presentation/MyAppointmentsScreen'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -61,6 +62,7 @@ function App() {
             signUp={<SignUpScreen />}
             catalog={<CatalogScreen />}
             serviceDetail={<ServiceDetailScreen />}
+            myAppointments={<MyAppointmentsScreen />}
           />
         </IonReactRouter>
       </AppProviders>

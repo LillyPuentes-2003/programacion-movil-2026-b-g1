@@ -15,4 +15,7 @@ export const routes = {
     path: '/service/:serviceId',
     build: (serviceId: string) => `/service/${serviceId}`,
   },
+  myAppointments: {
+    path: '/my-appointments',
+  },
 } as const

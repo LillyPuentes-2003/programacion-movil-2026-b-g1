@@ -15,6 +15,7 @@ function renderAt(path: string) {
         signUp={<p>pantalla-registro</p>}
         catalog={<p>pantalla-catalogo</p>}
         serviceDetail={<p>pantalla-detalle</p>}
+        myAppointments={<p>pantalla-mis-citas</p>}
       />
     </IonReactRouter>,
   )
