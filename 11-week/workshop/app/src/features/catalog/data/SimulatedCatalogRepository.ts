@@ -1,4 +1,5 @@
 import type { Service, ServiceType } from '@core/domain/Service'
+import { NotFoundError } from '@core/network/errors'
 
 import type { CatalogQueryResult, CatalogRepository } from '../domain/CatalogRepository'
 
@@ -72,7 +73,15 @@ export class SimulatedCatalogRepository implements CatalogRepository {
     }
   }
 
-  getServiceDetail(serviceId: string) {
+  async getServiceDetail(serviceId: string) {
+    if (this.config.delayMs > 0) await wait(this.config.delayMs)
+
+    if (this.config.mode === 'error') throw new Error('Falla simulada del detalle')
+    if (this.config.mode === 'demo') {
+      const service = DEMO_SERVICES.find((s) => s.id === serviceId)
+      if (!service) throw new NotFoundError('404')
+      return { service, isOffline: false }
+    }
     return this.real.getServiceDetail(serviceId)
   }
 }

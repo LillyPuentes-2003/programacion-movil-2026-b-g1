@@ -6,7 +6,8 @@ import { GoneError, NotFoundError } from '@core/network/errors'
 import type { CatalogRepository } from '../domain/CatalogRepository'
 import { getServiceDetail } from '../domain/getServiceDetail'
 
-type ServiceDetailStatus = 'loading' | 'loaded' | 'empty' | 'error'
+// notFound: el id no existe (404). gone: existió pero lo pausaron o eliminaron (410).
+type ServiceDetailStatus = 'loading' | 'loaded' | 'notFound' | 'gone' | 'error'
 
 interface ServiceDetailStoreState {
   status: ServiceDetailStatus
@@ -27,8 +28,10 @@ export const useServiceDetailStore = create<ServiceDetailStoreState>((set) => ({
       const { service, isOffline } = await getServiceDetail(repository, servicioId)
       set({ status: 'loaded', service, isOffline, errorMessage: undefined })
     } catch (error) {
-      if (error instanceof NotFoundError || error instanceof GoneError) {
-        set({ status: 'empty', service: null })
+      if (error instanceof NotFoundError) {
+        set({ status: 'notFound', service: null })
+      } else if (error instanceof GoneError) {
+        set({ status: 'gone', service: null })
       } else {
         set({
           status: 'error',

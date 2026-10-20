@@ -28,6 +28,10 @@
   "servicio": {
     "detalle": {
       "tituloError": "No se pudo cargar el servicio",
+      "mensajeError": "Revisa tu conexión a internet e intenta de nuevo.",
+      "tituloNoEncontrado": "No encontramos este servicio",
+      "mensajeNoEncontrado": "Puede que el enlace esté mal escrito. Búscalo en el catálogo.",
+      "agendarPronto": "Muy pronto vas a poder agendar desde aquí.",
       "reintentar": "Reintentar",
       "tituloNoDisponible": "Este servicio ya no está disponible",
       "mensajeNoDisponible": "Puede que lo hayan pausado o eliminado.",

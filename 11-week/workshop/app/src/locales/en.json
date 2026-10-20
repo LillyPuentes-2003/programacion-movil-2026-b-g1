@@ -28,6 +28,10 @@
   "servicio": {
     "detalle": {
       "tituloError": "Couldn't load the service",
+      "mensajeError": "Check your internet connection and try again.",
+      "tituloNoEncontrado": "We couldn't find this service",
+      "mensajeNoEncontrado": "The link may be mistyped. Look for it in the catalog.",
+      "agendarPronto": "You'll be able to book from here very soon.",
       "reintentar": "Retry",
       "tituloNoDisponible": "This service is no longer available",
       "mensajeNoDisponible": "It may have been paused or removed.",

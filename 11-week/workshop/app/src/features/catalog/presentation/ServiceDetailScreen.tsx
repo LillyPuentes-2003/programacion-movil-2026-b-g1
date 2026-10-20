@@ -10,7 +10,11 @@ import {
   IonPage,
   IonSkeletonText,
   IonToolbar,
+  useIonToast,
 } from '@ionic/react'
+
+import { routes } from '@core/routing/routes'
+import { useSessionStore } from '@core/session/useSessionStore'
 
 import { BotonPrimario } from '@shared/components/BotonPrimario'
 import { EstadoVacio } from '@shared/components/EstadoVacio'
@@ -24,6 +28,8 @@ export function ServiceDetailScreen() {
   const { serviceId } = useParams<{ serviceId: string }>()
   const repository = useCatalogRepository()
   const { status, service, isOffline, load } = useServiceDetailStore()
+  const sessionStatus = useSessionStore((state) => state.status)
+  const [presentToast] = useIonToast()
 
   useEffect(() => {
     if (!serviceId) return
@@ -33,6 +39,17 @@ export function ServiceDetailScreen() {
 
   async function handleCopyAddress(address: string) {
     await navigator.clipboard.writeText(address)
+    presentToast({ message: t('servicio.detalle.direccionCopiada'), duration: 1500, position: 'top' })
+  }
+
+  // Sin sesión se pide iniciarla y luego se vuelve a este mismo detalle (W11 CP7). La pantalla
+  // de agendar llega con HU-15; mientras tanto se avisa en vez de abrir una ruta vacía.
+  function handleBook(serviceId: string) {
+    if (sessionStatus !== 'authenticated') {
+      navigate(routes.login.path, { state: { from: routes.serviceDetail.build(serviceId) } })
+      return
+    }
+    presentToast({ message: t('servicio.detalle.agendarPronto'), duration: 2500, position: 'top' })
   }
 
   return (
@@ -40,7 +57,7 @@ export function ServiceDetailScreen() {
       <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/services" text="" aria-label="Volver al catálogo" />
+            <IonBackButton defaultHref={routes.catalog.path} text="" aria-label="Volver al catálogo" />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -122,13 +139,23 @@ export function ServiceDetailScreen() {
           </>
         )}
 
-        {status === 'empty' && (
+        {status === 'notFound' && (
+          <EstadoVacio
+            icon="🔍"
+            title={t('servicio.detalle.tituloNoEncontrado')}
+            message={t('servicio.detalle.mensajeNoEncontrado')}
+            actionLabel={t('servicio.detalle.accionVolver')}
+            onAction={() => navigate(routes.catalog.path)}
+          />
+        )}
+
+        {status === 'gone' && (
           <EstadoVacio
             icon="🚫"
             title={t('servicio.detalle.tituloNoDisponible')}
             message={t('servicio.detalle.mensajeNoDisponible')}
             actionLabel={t('servicio.detalle.accionVolver')}
-            onAction={() => navigate('/services')}
+            onAction={() => navigate(routes.catalog.path)}
           />
         )}
 
@@ -136,7 +163,7 @@ export function ServiceDetailScreen() {
           <EstadoVacio
             icon="⚠️"
             title={t('servicio.detalle.tituloError')}
-            message=""
+            message={t('servicio.detalle.mensajeError')}
             actionLabel={t('servicio.detalle.reintentar')}
             onAction={() => serviceId && load(repository, serviceId)}
           />
@@ -146,7 +173,7 @@ export function ServiceDetailScreen() {
         <IonFooter className="ion-no-border" style={{ padding: 'var(--space-md) var(--space-lg) var(--space-lg)' }}>
           <BotonPrimario
             label={t('servicio.detalle.agendar')}
-            onPress={() => navigate(`/book/${service.id}`)}
+            onPress={() => handleBook(service.id)}
             isDisabled={isOffline}
             disabledReason={isOffline ? t('servicio.detalle.sinConexionAgendar') : undefined}
           />
