@@ -11,6 +11,7 @@
     "offline": "Estás sin conexión. Mostrando la última actualización del {{fecha}}.",
     "error": {
       "titulo": "No se pudo cargar el catálogo",
+      "mensaje": "Revisa tu conexión a internet e intenta de nuevo.",
       "reintentar": "Reintentar"
     },
     "vacio": {

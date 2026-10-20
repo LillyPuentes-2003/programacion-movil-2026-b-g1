@@ -137,7 +137,7 @@ export function CatalogScreen() {
           <EstadoVacio
             icon="⚠️"
             title={t('catalogo.error.titulo')}
-            message=""
+            message={t('catalogo.error.mensaje')}
             actionLabel={t('catalogo.error.reintentar')}
             onAction={() => load(repository, selectedType)}
           />

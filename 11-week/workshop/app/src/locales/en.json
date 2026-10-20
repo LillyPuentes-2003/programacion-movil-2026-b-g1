@@ -11,6 +11,7 @@
     "offline": "You're offline. Showing the last update from {{fecha}}.",
     "error": {
       "titulo": "Couldn't load the catalog",
+      "mensaje": "Check your internet connection and try again.",
       "reintentar": "Retry"
     },
     "vacio": {

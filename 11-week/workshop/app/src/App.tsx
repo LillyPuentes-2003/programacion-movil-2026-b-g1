@@ -13,6 +13,7 @@ import { SignUpScreen } from '@features/auth/presentation/SignUpScreen'
 import { PantallaCarga } from '@shared/components/PantallaCarga'
 import { CatalogRepositoryImpl } from '@features/catalog/data/CatalogRepositoryImpl'
 import { CATALOG_REPOSITORY_KEY } from '@features/catalog/data/catalogRepositoryProvider'
+import { readSimulationConfig, SimulatedCatalogRepository } from '@features/catalog/data/SimulatedCatalogRepository'
 import { CatalogScreen } from '@features/catalog/presentation/CatalogScreen'
 import { ServiceDetailScreen } from '@features/catalog/presentation/ServiceDetailScreen'
 import { MyAppointmentsScreen } from '@features/appointments/presentation/MyAppointmentsScreen'
@@ -47,7 +48,7 @@ setupIonicReact()
 const container: Container = {
   [AUTH_REPOSITORY_KEY]: new AuthRepositoryImpl(),
   [SESSION_STORAGE_KEY]: new SecureSessionStorage(),
-  [CATALOG_REPOSITORY_KEY]: new CatalogRepositoryImpl(),
+  [CATALOG_REPOSITORY_KEY]: new SimulatedCatalogRepository(new CatalogRepositoryImpl(), readSimulationConfig()),
 }
 
 function App() {
