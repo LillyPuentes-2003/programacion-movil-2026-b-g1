@@ -102,7 +102,16 @@
       "irALogin": "Iniciar sesión con ese correo"
     },
     "boton": {
-      "crear": "Crear cuenta"
+      "crear": "Crear cuenta",
+      "creando": "Creando tu cuenta…",
+      "completarCampos": "Completa los campos marcados para continuar"
+    },
+    "exito": "¡Listo! Tu cuenta quedó creada.",
+    "salir": {
+      "titulo": "¿Salir sin crear la cuenta?",
+      "mensaje": "Se va a borrar lo que escribiste.",
+      "quedarme": "Seguir llenando",
+      "salir": "Salir"
     },
     "conCuenta": "¿Ya tienes cuenta?",
     "iniciarSesion": "Inicia sesión"

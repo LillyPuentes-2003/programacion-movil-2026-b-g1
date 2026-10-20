@@ -102,7 +102,16 @@
       "irALogin": "Sign in with that email"
     },
     "boton": {
-      "crear": "Create account"
+      "crear": "Create account",
+      "creando": "Creating your account…",
+      "completarCampos": "Fill in the highlighted fields to continue"
+    },
+    "exito": "Done! Your account was created.",
+    "salir": {
+      "titulo": "Leave without creating the account?",
+      "mensaje": "What you typed will be erased.",
+      "quedarme": "Keep filling in",
+      "salir": "Leave"
     },
     "conCuenta": "Already have an account?",
     "iniciarSesion": "Sign in"

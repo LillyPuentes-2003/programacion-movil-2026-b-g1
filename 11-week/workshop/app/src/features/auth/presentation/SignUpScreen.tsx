@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
-  IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonFooter,
   IonHeader,
+  IonIcon,
   IonPage,
   IonToolbar,
+  useIonAlert,
+  useIonToast,
 } from '@ionic/react'
+import { arrowBack } from 'ionicons/icons'
 
 import type { UserRole } from '@core/domain/Session'
 import { useIsOnline } from '@core/network/useIsOnline'
@@ -48,6 +52,8 @@ export function SignUpScreen() {
   const storage = useSessionStorage()
   const isOnline = useIsOnline()
   const { status, failure, submit, reset } = useSignUpStore()
+  const [presentToast] = useIonToast()
+  const [presentAlert] = useIonAlert()
 
   // Todo lo escrito vive aquí: cambiar de rol solo muestra u oculta los campos del salón, y un
   // error de la API no toca este estado.
@@ -60,6 +66,8 @@ export function SignUpScreen() {
   const returnTo = safeReturnTo(location.state)
   const isSubmitting = status === 'submitting'
   const isBusiness = role === 'business'
+  // El botón no se habilita mientras falte algo o haya un dato mal escrito (W11 CP6).
+  const hasErrors = !role || Object.keys(validateSignUp(input())).length > 0
 
   useEffect(() => {
     reset()
@@ -102,6 +110,7 @@ export function SignUpScreen() {
     setEditedSinceSubmit({})
     const user = await submit(repository, storage, current)
     if (user) {
+      presentToast({ message: t('registro.exito'), duration: 2500, color: 'success', position: 'top' })
       navigate(returnTo ?? homeFor(user.role), { replace: true })
     }
   }
@@ -111,6 +120,19 @@ export function SignUpScreen() {
     navigate(routes.login.path, { state })
   }
 
+  // Salir del registro borra lo escrito: si ya hay algo, se pide confirmación antes.
+  function confirmLeave(leave: () => void) {
+    if (!Object.values(values).some((value) => value.trim())) return leave()
+    presentAlert({
+      header: t('registro.salir.titulo'),
+      message: t('registro.salir.mensaje'),
+      buttons: [
+        { text: t('registro.salir.quedarme'), role: 'cancel' },
+        { text: t('registro.salir.salir'), role: 'destructive', handler: leave },
+      ],
+    })
+  }
+
   const showEmailTakenLink = failure?.kind === 'emailTaken' && !editedSinceSubmit.email
 
   return (
@@ -118,7 +140,12 @@ export function SignUpScreen() {
       <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref={routes.catalog.path} text="" aria-label="Volver al catálogo" />
+            <IonButton
+              aria-label="Volver al catálogo"
+              onClick={() => confirmLeave(() => navigate(routes.catalog.path))}
+            >
+              <IonIcon slot="icon-only" icon={arrowBack} aria-hidden="true" />
+            </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -242,15 +269,22 @@ export function SignUpScreen() {
         <BotonPrimario
           label={t('registro.boton.crear')}
           onPress={handleSubmit}
+          loadingLabel={t('registro.boton.creando')}
           isLoading={isSubmitting}
-          isDisabled={!role || !isOnline}
+          isDisabled={!isOnline || hasErrors}
           disabledReason={
-            !isOnline ? t('auth.sinConexion.registro') : !role ? t('registro.rol.elegirPrimero') : undefined
+            !isOnline
+              ? t('auth.sinConexion.registro')
+              : !role
+                ? t('registro.rol.elegirPrimero')
+                : hasErrors
+                  ? t('registro.boton.completarCampos')
+                  : undefined
           }
         />
         <p className="mc-text-body mc-form-alt">
           {t('registro.conCuenta')}{' '}
-          <button type="button" className="mc-link" onClick={() => goToLogin()}>
+          <button type="button" className="mc-link" onClick={() => confirmLeave(() => goToLogin())}>
             {t('registro.iniciarSesion')}
           </button>
         </p>

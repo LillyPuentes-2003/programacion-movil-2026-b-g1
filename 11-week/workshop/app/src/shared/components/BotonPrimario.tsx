@@ -1,5 +1,9 @@
+import { IonSpinner } from '@ionic/react'
+
 interface BotonPrimarioProps {
   label: string
+  // Texto mientras se envía, p. ej. "Creando cuenta…" (W11 CP6)
+  loadingLabel?: string
   onPress: () => void
   isLoading?: boolean
   isDisabled?: boolean
@@ -9,6 +13,7 @@ interface BotonPrimarioProps {
 
 export function BotonPrimario({
   label,
+  loadingLabel,
   onPress,
   isLoading = false,
   isDisabled = false,
@@ -24,7 +29,14 @@ export function BotonPrimario({
       aria-busy={isLoading}
       aria-label={isDisabled && disabledReason ? `${label}. ${disabledReason}` : undefined}
     >
-      {isLoading ? '…' : label}
+      {isLoading ? (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
+          <IonSpinner name="crescent" aria-hidden="true" style={{ width: 18, height: 18 }} />
+          {loadingLabel ?? label}
+        </span>
+      ) : (
+        label
+      )}
     </button>
   )
 }
