@@ -86,10 +86,10 @@
   color: var(--color-text-secondary);
   border-radius: var(--radius-pill);
   padding: 7px 13px;
-  font: 500 13px/16px var(--ion-font-family);
+  font: 500 0.8125rem/1.25 var(--ion-font-family);
   white-space: nowrap;
   flex: none;
-  min-height: 32px;
+  min-height: var(--touch-target);
 }
 .mc-chip[aria-pressed='true'] {
   background: var(--color-brand-soft);
@@ -145,7 +145,7 @@
 }
 
 .mc-empty {
-  padding: var(--space-xxl) var(--space-sm);
+  padding: var(--space-xxl) var(--space-lg);
   text-align: center;
 }
 .mc-empty-art {
@@ -276,7 +276,7 @@
   border: 0;
   background: none;
   padding: var(--space-xs) 0;
-  min-height: 32px;
+  min-height: var(--touch-target);
   font: 600 14px/20px var(--ion-font-family);
   color: var(--color-brand);
   text-decoration: underline;

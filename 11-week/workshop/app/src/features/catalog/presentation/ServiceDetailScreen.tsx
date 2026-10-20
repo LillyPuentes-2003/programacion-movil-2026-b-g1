@@ -40,7 +40,7 @@ export function ServiceDetailScreen() {
       <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/services" text="" />
+            <IonBackButton defaultHref="/services" text="" aria-label="Volver al catálogo" />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -84,7 +84,7 @@ export function ServiceDetailScreen() {
                   marginBottom: 'var(--space-md)',
                 }}
               >
-                <span style={{ font: '700 22px/26px var(--ion-font-family)', color: 'var(--color-brand)' }}>
+                <span style={{ font: '700 1.375rem/1.2 var(--ion-font-family)', color: 'var(--color-brand)' }}>
                   {new Intl.NumberFormat('es-CO', {
                     style: 'currency',
                     currency: 'COP',
@@ -108,7 +108,8 @@ export function ServiceDetailScreen() {
               <span className="mc-text-caption">Dirección</span>
               <button
                 className="mc-text-body"
-                style={{ background: 'none', border: 0, padding: 0, color: 'var(--color-brand)' }}
+                style={{ background: 'none', border: 0, padding: 0, minHeight: 'var(--touch-target)', color: 'var(--color-brand)' }}
+                aria-label={`Copiar dirección: ${service.business.address}`}
                 onClick={() => handleCopyAddress(service.business.address)}
               >
                 {service.business.address}

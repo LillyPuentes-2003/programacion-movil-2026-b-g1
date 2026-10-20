@@ -118,7 +118,7 @@ export function SignUpScreen() {
       <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref={routes.catalog.path} text="" />
+            <IonBackButton defaultHref={routes.catalog.path} text="" aria-label="Volver al catálogo" />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
