@@ -1,0 +1,28 @@
+:root {
+  --ion-color-primary: #b0306a;
+  --ion-color-primary-rgb: 176, 48, 106;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #9b2a5d;
+  --ion-color-primary-tint: #b84579;
+}
+
+.offline-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #3a3a3c;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.permission-denied {
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-left: 4px solid #c77700;
+  background: #fff4e0;
+  color: #5c3b00;
+  border-radius: 4px;
+}
