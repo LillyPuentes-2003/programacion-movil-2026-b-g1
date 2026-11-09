@@ -1,0 +1,16 @@
+{
+  "name": "c3-activity-api",
+  "version": "1.0.0",
+  "description": "API con login por token y una ruta protegida (salones cercanos de ManiCita) — Corte 3",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
